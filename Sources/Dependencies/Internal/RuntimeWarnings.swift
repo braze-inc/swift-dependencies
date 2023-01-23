@@ -1,6 +1,7 @@
 @_transparent
 @usableFromInline
 @inline(__always)
+@available(macOS 10.14, iOS 12.0, watchOS 5.0, tvOS 12.0, *)
 func runtimeWarn(
   _ message: @autoclosure () -> String,
   category: String? = "Dependencies",

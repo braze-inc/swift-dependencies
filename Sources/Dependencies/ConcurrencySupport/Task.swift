@@ -1,3 +1,4 @@
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension Task where Failure == Never {
   /// An async function that never returns.
   public static func never() async throws -> Success {
@@ -8,6 +9,7 @@ extension Task where Failure == Never {
   }
 }
 
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension Task where Success == Never, Failure == Never {
   /// An async function that never returns.
   public static func never() async throws {

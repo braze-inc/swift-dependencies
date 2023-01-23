@@ -1,6 +1,7 @@
 import Dependencies
 import XCTest
 
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 final class BaseTestCaseTests: DerivedBaseTestCase {
   override func setUp() async throws {
     try await super.setUp()

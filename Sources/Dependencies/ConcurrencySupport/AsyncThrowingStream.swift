@@ -1,3 +1,4 @@
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension AsyncThrowingStream where Failure == Error {
   /// Produces an `AsyncThrowingStream` from an `AsyncSequence` by consuming the sequence till it
   /// terminates, rethrowing any failure.
@@ -80,6 +81,7 @@ extension AsyncThrowingStream where Failure == Error {
   }
 }
 
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension AsyncSequence {
   /// Erases this async sequence to an async throwing stream that produces elements till this
   /// sequence terminates, rethrowing any error on failure.

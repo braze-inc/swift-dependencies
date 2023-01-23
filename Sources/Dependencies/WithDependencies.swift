@@ -121,15 +121,17 @@ public func withDependencies<Model: AnyObject, R>(
 ) rethrows -> R {
   guard let values = dependencyObjects.values(from: model)
   else {
-    runtimeWarn(
-      """
-      You are trying to propagate dependencies to a child model from a model with no dependencies. \
-      To fix this, the given '\(Model.self)' must be returned from another 'withDependencies' \
-      closure, or the class must hold at least one '@Dependency' property.
-      """,
-      file: file,
-      line: line
-    )
+    if #available(macOS 10.14, iOS 12.0, watchOS 5.0, tvOS 12.0, *) {
+      runtimeWarn(
+        """
+        You are trying to propagate dependencies to a child model from a model with no dependencies. \
+        To fix this, the given '\(Model.self)' must be returned from another 'withDependencies' \
+        closure, or the class must hold at least one '@Dependency' property.
+        """,
+        file: file,
+        line: line
+      )
+    }
     return try operation()
   }
   return try withDependencies {
@@ -191,15 +193,17 @@ public func withDependencies<Model: AnyObject, R>(
   ) async rethrows -> R {
     guard let values = dependencyObjects.values(from: model)
     else {
-      runtimeWarn(
-        """
-        You are trying to propagate dependencies to a child model from a model with no \
-        dependencies. To fix this, the given '\(Model.self)' must be returned from another \
-        'withDependencies' closure, or the class must hold at least one '@Dependency' property.
-        """,
-        file: file,
-        line: line
-      )
+      if #available(macOS 10.14, iOS 12.0, watchOS 5.0, tvOS 12.0, *) {
+        runtimeWarn(
+          """
+          You are trying to propagate dependencies to a child model from a model with no \
+          dependencies. To fix this, the given '\(Model.self)' must be returned from another \
+          'withDependencies' closure, or the class must hold at least one '@Dependency' property.
+          """,
+          file: file,
+          line: line
+        )
+      }
       return try await operation()
     }
     return try await withDependencies {
@@ -224,15 +228,17 @@ public func withDependencies<Model: AnyObject, R>(
   ) async rethrows -> R {
     guard let values = dependencyObjects.values(from: model)
     else {
-      runtimeWarn(
-        """
-        You are trying to propagate dependencies to a child model from a model with no \
-        dependencies. To fix this, the given '\(Model.self)' must be returned from another \
-        'withDependencies' closure, or the class must hold at least one '@Dependency' property.
-        """,
-        file: file,
-        line: line
-      )
+      if #available(macOS 10.14, iOS 12.0, watchOS 5.0, tvOS 12.0, *) {
+        runtimeWarn(
+          """
+          You are trying to propagate dependencies to a child model from a model with no \
+          dependencies. To fix this, the given '\(Model.self)' must be returned from another \
+          'withDependencies' closure, or the class must hold at least one '@Dependency' property.
+          """,
+          file: file,
+          line: line
+        )
+      }
       return try await operation()
     }
     return try await withDependencies {
@@ -406,7 +412,15 @@ private class DependencyObjects: @unchecked Sendable {
         object: object,
         dependencyValues: DependencyValues._current
       )
-      Task {
+      if #available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *) {
+        Task {
+          self.storage.withValue { storage in
+            for (id, box) in storage where box.object == nil {
+              storage.removeValue(forKey: id)
+            }
+          }
+        }
+      } else {
         self.storage.withValue { storage in
           for (id, box) in storage where box.object == nil {
             storage.removeValue(forKey: id)

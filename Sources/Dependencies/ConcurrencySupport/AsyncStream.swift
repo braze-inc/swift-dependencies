@@ -1,3 +1,4 @@
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension AsyncStream {
   /// Produces an `AsyncStream` from an `AsyncSequence` by consuming the sequence till it
   /// terminates, ignoring any failure.
@@ -126,6 +127,7 @@ extension AsyncStream {
   }
 }
 
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension AsyncSequence {
   /// Erases this async sequence to an async stream that produces elements till this sequence
   /// terminates (or fails).

@@ -2,6 +2,7 @@ import XCTest
 
 @testable import Dependencies
 
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 final class DependencyTests: XCTestCase {
   func testExtendingLifetimeToChildModels() {
     @Dependency(\.int) var int: Int
@@ -172,6 +173,8 @@ final class DependencyTests: XCTestCase {
     XCTAssertEqual("cool", greatGrandchild.string)
   }
 }
+
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 private class Model {
   @Dependency(\.int) var int
   @Dependency(\.string) var string

@@ -291,23 +291,25 @@ private final class CachedValues: @unchecked Sendable {
               """
           )
 
-          runtimeWarn(
-            """
-            "@Dependency(\\.\(function))" has no live implementation, but was accessed from a \
-            live context.
+          if #available(macOS 10.14, iOS 12.0, watchOS 5.0, tvOS 12.0, *) {
+            runtimeWarn(
+              """
+              "@Dependency(\\.\(function))" has no live implementation, but was accessed from a \
+              live context.
 
-            \(dependencyDescription)
+              \(dependencyDescription)
 
-            Every dependency registered with the library must conform to "DependencyKey", and \
-            that conformance must be visible to the running application.
+              Every dependency registered with the library must conform to "DependencyKey", and \
+              that conformance must be visible to the running application.
 
-            To fix, make sure that "\(typeName(Key.self))" conforms to "DependencyKey" by \
-            providing a live implementation of your dependency, and make sure that the \
-            conformance is linked with this current application.
-            """,
-            file: DependencyValues.currentDependency.file ?? file,
-            line: DependencyValues.currentDependency.line ?? line
-          )
+              To fix, make sure that "\(typeName(Key.self))" conforms to "DependencyKey" by \
+              providing a live implementation of your dependency, and make sure that the \
+              conformance is linked with this current application.
+              """,
+              file: DependencyValues.currentDependency.file ?? file,
+              line: DependencyValues.currentDependency.line ?? line
+            )
+          }
         }
         return Key.testValue
       }
