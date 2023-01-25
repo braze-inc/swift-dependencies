@@ -46,11 +46,13 @@
     }
 
     @available(watchOS, unavailable)
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @discardableResult
     public func callAsFunction(_ url: URL) async -> Bool {
       await self.handler(url)
     }
 
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     @_disfavoredOverload
     public func callAsFunction(_ url: URL) async {
       _ = await self.handler(url)

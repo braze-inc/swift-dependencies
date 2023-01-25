@@ -44,6 +44,7 @@ extension DependencyValues {
   ///
   /// Now this is easy to test. We just have to `await` for the code to finish, and once it does
   /// we can verify that the email was sent.
+  @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
   public var fireAndForget: FireAndForget {
     get { self[FireAndForgetKey.self] }
     set { self[FireAndForgetKey.self] = newValue }
@@ -53,6 +54,7 @@ extension DependencyValues {
 /// A type for creating unstructured tasks in production and structured tasks in tests.
 ///
 /// See ``DependencyValues/fireAndForget`` for more information.
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public struct FireAndForget: Sendable {
   public let operation:
     @Sendable (TaskPriority?, @Sendable @escaping () async throws -> Void) async -> Void
@@ -65,6 +67,7 @@ public struct FireAndForget: Sendable {
   }
 }
 
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 private enum FireAndForgetKey: DependencyKey {
   public static let liveValue = FireAndForget { priority, operation in
     Task(priority: priority) { try await operation() }

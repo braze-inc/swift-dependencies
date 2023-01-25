@@ -5,10 +5,11 @@ import PackageDescription
 let package = Package(
   name: "swift-dependencies",
   platforms: [
-    .iOS(.v13),
-    .macOS(.v10_15),
-    .tvOS(.v13),
-    .watchOS(.v6),
+    .iOS(.v11),
+    .macCatalyst(.v13),
+    .tvOS(.v11),
+    .macOS(.v11),
+    .watchOS(.v4),
   ],
   products: [
     .library(
@@ -18,16 +19,12 @@ let package = Package(
   ],
   dependencies: [
     .package(url: "https://github.com/google/swift-benchmark", from: "0.1.0"),
-    .package(url: "https://github.com/pointfreeco/combine-schedulers", from: "0.1.0"),
-    .package(url: "https://github.com/pointfreeco/swift-clocks", from: "0.1.0"),
-    .package(url: "https://github.com/pointfreeco/xctest-dynamic-overlay", from: "0.8.0"),
+    .package(url: "https://github.com/braze-inc/xctest-dynamic-overlay", branch: "braze"),
   ],
   targets: [
     .target(
       name: "Dependencies",
       dependencies: [
-        .product(name: "CombineSchedulers", package: "combine-schedulers"),
-        .product(name: "Clocks", package: "swift-clocks"),
         .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
       ]
     ),
