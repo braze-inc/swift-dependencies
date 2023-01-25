@@ -1,3 +1,4 @@
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension ActorIsolated {
   @available(
     *,
@@ -87,6 +88,7 @@ extension DependencyValues {
     }
   }
 
+  @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
   @available(*, deprecated, message: "Use 'withDependencies' instead.")
   public static func withValue<Value, R>(
     _ keyPath: WritableKeyPath<DependencyValues, Value>,
@@ -108,6 +110,7 @@ extension DependencyValues {
     try withDependencies(updateValuesForOperation, operation: operation)
   }
 
+  @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
   @available(*, deprecated, message: "Use 'withDependencies' instead.")
   public static func withValues<R>(
     _ updateValuesForOperation: (inout Self) throws -> Void,
@@ -124,6 +127,7 @@ extension DependencyValues {
     try withDependencies(updateValuesForOperation, operation: operation)
   }
 
+  @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
   @available(*, deprecated, message: "Use 'withDependencies' instead.")
   public static func withTestValues<R>(
     _ updateValuesForOperation: (inout Self) async throws -> Void,

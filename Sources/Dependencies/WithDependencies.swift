@@ -59,6 +59,7 @@ public func withDependencies<R>(
   ///     duration of the operation.
   ///   - operation: An operation to perform wherein dependencies have been overridden.
   /// - Returns: The result returned from `operation`.
+  @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
   @_unsafeInheritExecutor
   @discardableResult
   public func withDependencies<R>(
@@ -182,6 +183,7 @@ public func withDependencies<Model: AnyObject, R>(
   ///     duration of the operation.
   ///   - operation: The operation to run with the updated dependencies.
   /// - Returns: The result returned from `operation`.
+  @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
   @_unsafeInheritExecutor
   @discardableResult
   public func withDependencies<Model: AnyObject, R>(
@@ -193,17 +195,15 @@ public func withDependencies<Model: AnyObject, R>(
   ) async rethrows -> R {
     guard let values = dependencyObjects.values(from: model)
     else {
-      if #available(macOS 10.14, iOS 12.0, watchOS 5.0, tvOS 12.0, *) {
-        runtimeWarn(
-          """
-          You are trying to propagate dependencies to a child model from a model with no \
-          dependencies. To fix this, the given '\(Model.self)' must be returned from another \
-          'withDependencies' closure, or the class must hold at least one '@Dependency' property.
-          """,
-          file: file,
-          line: line
-        )
-      }
+      runtimeWarn(
+        """
+        You are trying to propagate dependencies to a child model from a model with no \
+        dependencies. To fix this, the given '\(Model.self)' must be returned from another \
+        'withDependencies' closure, or the class must hold at least one '@Dependency' property.
+        """,
+        file: file,
+        line: line
+      )
       return try await operation()
     }
     return try await withDependencies {
@@ -264,6 +264,7 @@ public func withDependencies<Model: AnyObject, R>(
   ///     operation.
   ///   - operation: The operation to run with the updated dependencies.
   /// - Returns: The result returned from `operation`.
+  @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
   @_unsafeInheritExecutor
   @discardableResult
   public func withDependencies<Model: AnyObject, R>(
@@ -359,6 +360,7 @@ public func withEscapedDependencies<R>(
 ///
 /// - Parameter operation: A closure that takes a ``DependencyValues/Continuation`` value for
 ///   propagating dependencies past an escaping closure boundary.
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 public func withEscapedDependencies<R>(
   _ operation: (DependencyValues.Continuation) async throws -> R
 ) async rethrows -> R {
@@ -389,6 +391,7 @@ extension DependencyValues {
     ///
     /// See the docs of ``withEscapedDependencies(_:)-5xvi3`` for more information.
     /// - Parameter operation: A closure which will have access to the propagated dependencies.
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
     public func yield<R>(_ operation: () async throws -> R) async rethrows -> R {
       try await withDependencies {
         $0 = self.dependencies

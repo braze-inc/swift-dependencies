@@ -38,6 +38,7 @@
 /// ```
 ///
 /// To synchronously isolate a value, see ``LockIsolated``.
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 @dynamicMemberLookup
 public final actor ActorIsolated<Value> {
   /// The actor-isolated value.
